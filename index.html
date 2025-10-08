@@ -1,199 +1,42 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Pro Plus - Bloqueador Universal</title>
+    <meta charset="utf-8">
+    <title>Video Pro Plus - Instalação</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            text-align: center;
-        }
-        
-        .logo { font-size: 3em; margin-bottom: 20px; }
-        h1 { color: #333; margin-bottom: 10px; }
-        
-        .status {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 4px solid #28a745;
-        }
-        
-        .btn {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary { background: #007bff; color: white; }
-        .btn-success { background: #28a745; color: white; }
-        .btn-danger { background: #dc3545; color: white; }
-        .btn-info { background: #17a2b8; color: white; }
-        .btn-warning { background: #ffc107; color: black; }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .youtube-fix {
-            background: #d1ecf1;
-            border: 1px solid #bee5eb;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-            text-align: left;
-        }
-        
-        .youtube-fix h4 { color: #0c5460; margin-bottom: 10px; }
+        body { font-family: Arial; max-width: 600px; margin: 40px auto; padding: 20px; }
+        .step { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 5px; }
+        code { background: #eee; padding: 2px 5px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">🎬</div>
-        <h1>Video Pro Plus</h1>
-        <p>Bloqueador Universal de Anúncios em Vídeos</p>
-        
-        <div class="status" id="status">
-            <strong>Status:</strong> Pronto para usar ✅
-        </div>
-        
-        <div class="youtube-fix">
-            <h4>🔧 SOLUÇÃO YOUTUBE:</h4>
-            <p><strong>Problema:</strong> YouTube insiste em abrir no app</p>
-            <p><strong>Solução:</strong> Use "YouTube Forçar Navegador" abaixo</p>
-        </div>
-        
-        <button class="btn btn-primary" onclick="abrirYouTubeForcado()">
-            🔧 YouTube Forçar Navegador
-        </button>
-        
-        <button class="btn btn-success" onclick="abrirTwitter()">
-            🐦 X/Twitter
-        </button>
-        
-        <button class="btn btn-danger" onclick="abrirTikTok()">
-            📱 TikTok
-        </button>
-        
-        <button class="btn btn-info" onclick="mostrarTutorialCompleto()">
-            📖 Tutorial Completo
-        </button>
-
-        <div style="margin-top: 20px; font-size: 12px; color: #666;">
-            💡 Dica: Adicione esta página à tela inicial para acesso rápido!
-        </div>
+    <h1>🎯 Video Pro Plus</h1>
+    <p><strong>Bloqueador Universal de Anúncios em Videos</strong></p>
+    
+    <div class="step">
+        <h3>📥 Como Instalar:</h3>
+        <ol>
+            <li>Baixe os arquivos deste repositório</li>
+            <li>Extraia em uma pasta chamada <code>video-pro-plus</code></li>
+            <li>Abra <code>chrome://extensions/</code></li>
+            <li>Ative <strong>"Modo do desenvolvedor"</strong></li>
+            <li>Clique em <strong>"Carregar sem compactação"</strong></li>
+            <li>Selecione a pasta da extensão</li>
+        </ol>
     </div>
 
-    <script>
-        // URLs ESPECIAIS PARA FORÇAR NAVEGADOR
-        const urlsEspeciais = {
-            // Várias tentativas para YouTube
-            youtube: [
-                "https://m.youtube.com", // Versão mobile
-                "https://www.youtube.com/?app=desktop", // Forçar desktop
-                "https://youtube.com/?noapp=1", // Tentativa sem app
-                "https://www.youtube.com/?persist_app=0" // Não persistir app
-            ],
-            twitter: "https://twitter.com/i/flow/login",
-            tiktok: "https://www.tiktok.com/login"
-        };
+    <div class="step">
+        <h3>✅ Status: Pronto para usar ✔️</h3>
+        <p><strong>Solução YouTube:</strong> Força abertura no navegador</p>
+    </div>
 
-        // Função ESPECIAL para YouTube
-        function abrirYouTubeForcado() {
-            let tentativa = 0;
-            const maxTentativas = urlsEspeciais.youtube.length;
-            
-            function tentarAbrir() {
-                if (tentativa >= maxTentativas) {
-                    alert('❌ YouTube teimoso! Tente manualmente:\n1. Abra Chrome/Firefox\n2. Digite: youtube.com\n3. Use nossa extensão quando publicada');
-                    return;
-                }
-                
-                const url = urlsEspeciais.youtube[tentativa];
-                const novaJanela = window.open(url, '_blank', 'noopener,noreferrer');
-                
-                setTimeout(() => {
-                    if (novaJanela && !novaJanela.closed) {
-                        alert('✅ YouTube aberto no navegador! Faça login e aproveite sem anúncios!');
-                    } else {
-                        tentativa++;
-                        alert(`🔄 Tentativa ${tentativa}/${maxTentativas}... Tentando método alternativo.`);
-                        tentarAbrir();
-                    }
-                }, 1000);
-            }
-            
-            tentarAbrir();
-        }
-
-        // Funções normais para outras plataformas
-        function abrirTwitter() {
-            window.open(urlsEspeciais.twitter, '_blank', 'noopener,noreferrer');
-            alert('✅ X/Twitter aberto! Faça login e remova posts promovidos!');
-        }
-
-        function abrirTikTok() {
-            window.open(urlsEspeciais.tiktok, '_blank', 'noopener,noreferrer');
-            alert('✅ TikTok aberto! Entre na sua conta e limpe o feed!');
-        }
-
-        // Tutorial completo
-        function mostrarTutorialCompleto() {
-            const tutorial = `
-🎬 TUTORIAL VIDEO PRO PLUS:
-
-📺 YOUTUBE:
-• Use "YouTube Forçar Navegador"
-• Tenta múltiplos métodos automaticamente
-• Funciona na maioria dos dispositivos
-
-🐦 X/TWITTER:
-• Abre direto na página de login
-• Remove posts promovidos
-• Funciona na primeira tentativa
-
-📱 TIKTOK:
-• Página de login direta
-• Limpa feed de anúncios
-• Experiência limpa
-
-🚀 EM BREVE:
-• Extensão Firefox/Chrome
-• Bloqueador mais eficiente
-• Mais plataformas
-
-💡 Use sempre pelo NAVEGADOR (não apps)!
-            `;
-            alert(tutorial);
-        }
-
-        // Detectar se é PWA
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            console.log('Executando como PWA');
-            document.getElementById('status').innerHTML = '<strong>Status:</strong> PWA Ativo 🚀';
-        }
-    </script>
+    <div class="step">
+        <h3>🌐 Sites Suportados:</h3>
+        <ul>
+            <li>YouTube (área de login e vídeos)</li>
+            <li>X/Twitter</li>
+            <li>TikTok</li>
+        </ul>
+    </div>
 </body>
 </html>

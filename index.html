@@ -141,8 +141,8 @@
         
         <div class="tutorial">
             <h4>🎯 COMO FUNCIONA:</h4>
-            <p><strong>• SEM login necessário</strong> - Use sua conta normal</p>
-            <p><strong>• Abre no NAVEGADOR</strong> - URLs especiais forçam navegador</p>
+            <p><strong>• Página inicial</strong> - Use qualquer conta</p>
+            <p><strong>• Abre no NAVEGADOR</strong> - Funciona melhor no Chrome</p>
             <p><strong>• Bloqueio automático</strong> - Anúncios são removidos</p>
         </div>
         
@@ -170,15 +170,15 @@
         </div>
         
         <button class="btn btn-primary" onclick="abrirYouTube()">
-            📺 Abrir YouTube (Forçar Navegador)
+            📺 Abrir YouTube (Página Inicial)
         </button>
         
         <button class="btn btn-success" onclick="abrirTwitter()">
-            🐦 Abrir X/Twitter (Forçar Navegador)
+            🐦 Abrir X/Twitter (Página Inicial)
         </button>
         
         <button class="btn btn-danger" onclick="abrirTikTok()">
-            📱 Abrir TikTok (Forçar Navegador)
+            📱 Abrir TikTok (Página Inicial)
         </button>
         
         <div class="emergency-section">
@@ -216,11 +216,11 @@
             tiktok: true
         };
 
-        // URLs ESPECIAIS que forçam navegador
-        const urlsEspeciais = {
-            youtube: "https://www.youtube.com/?disable_polymer=true&openInBrowser=1",
-            twitter: "https://mobile.twitter.com",
-            tiktok: "https://www.tiktok.com/foryou?noAppRedirect=1"
+        // URLs CORRETAS - PÁGINAS INICIAIS
+        const urlsCorretas = {
+            youtube: "https://www.youtube.com",
+            twitter: "https://twitter.com",
+            tiktok: "https://www.tiktok.com"
         };
 
         // Carregar configurações salvas
@@ -255,14 +255,14 @@
             salvarConfiguracoes();
         });
 
-        // FUNÇÕES COM URLs ESPECIAIS
+        // FUNÇÕES COM URLs CORRETAS
         function abrirYouTube() {
             if (!config.youtube) {
                 alert('❌ YouTube está desativado nas configurações!');
                 return;
             }
             
-            const novaJanela = window.open(urlsEspeciais.youtube, '_blank', 'noopener,noreferrer');
+            const novaJanela = window.open(urlsCorretas.youtube, '_blank', 'noopener,noreferrer');
             verificarAbertura(novaJanela, 'YouTube');
         }
 
@@ -272,7 +272,7 @@
                 return;
             }
             
-            const novaJanela = window.open(urlsEspeciais.twitter, '_blank', 'noopener,noreferrer');
+            const novaJanela = window.open(urlsCorretas.twitter, '_blank', 'noopener,noreferrer');
             verificarAbertura(novaJanela, 'X/Twitter');
         }
 
@@ -282,7 +282,7 @@
                 return;
             }
             
-            const novaJanela = window.open(urlsEspeciais.tiktok, '_blank', 'noopener,noreferrer');
+            const novaJanela = window.open(urlsCorretas.tiktok, '_blank', 'noopener,noreferrer');
             verificarAbertura(novaJanela, 'TikTok');
         }
 
@@ -290,7 +290,7 @@
         function verificarAbertura(janela, plataforma) {
             setTimeout(() => {
                 if (janela && !janela.closed) {
-                    alert(`✅ ${plataforma} aberto no NAVEGADOR!\n\nUse sua conta normal - bloqueador ativo!`);
+                    alert(`✅ ${plataforma} aberto no NAVEGADOR!\n\nUse qualquer conta - bloqueador ativo!`);
                 } else {
                     alert(`⚠️ ${plataforma} pode ter aberto no app.\n\nUse os botões "Copiar Link" e cole no Chrome/Firefox!`);
                 }
@@ -299,19 +299,19 @@
 
         // FUNÇÕES DE COPIA DE LINK (fallback)
         function copiarLinkYouTube() {
-            navigator.clipboard.writeText(urlsEspeciais.youtube).then(() => {
+            navigator.clipboard.writeText(urlsCorretas.youtube).then(() => {
                 alert('📋 Link YouTube copiado! Cole no Chrome/Firefox.');
             });
         }
 
         function copiarLinkTwitter() {
-            navigator.clipboard.writeText(urlsEspeciais.twitter).then(() => {
+            navigator.clipboard.writeText(urlsCorretas.twitter).then(() => {
                 alert('📋 Link Twitter copiado! Cole no Chrome/Firefox.');
             });
         }
 
         function copiarLinkTikTok() {
-            navigator.clipboard.writeText(urlsEspeciais.tiktok).then(() => {
+            navigator.clipboard.writeText(urlsCorretas.tiktok).then(() => {
                 alert('📋 Link TikTok copiado! Cole no Chrome/Firefox.');
             });
         }
@@ -326,13 +326,13 @@
    • Configurações são salvas automaticamente
 
 2️⃣ USO NORMAL:
-   • Clique em "Abrir (Forçar Navegador)"
-   • URLs especiais tentam forçar navegador
+   • Clique em "Abrir (Página Inicial)"
+   • Use QUALQUER conta logada
+   • Funciona com contas gratuitas
 
 3️⃣ CASO ABRA NO APP:
    • Use botões "Copiar Link" 
    • Cole manualmente no Chrome/Firefox
-   • Funciona com QUALQUER conta logada
 
 4️⃣ DICAS:
    • Adicione esta página à tela inicial

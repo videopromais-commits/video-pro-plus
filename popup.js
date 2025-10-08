@@ -1,36 +1,60 @@
-// Video Pro Plus - Popup functionality
+// Video Pro Plus - Popup Interface
 document.addEventListener('DOMContentLoaded', function() {
-    
-    // Botão Bloquear Anúncios
-    document.getElementById('blockAds').addEventListener('click', function() {
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            chrome.tabs.sendMessage(tabs[0].id, {action: "blockAds"});
-        });
-        alert('Anúncios bloqueados nesta página!');
-    });
+  console.log('🎯 Video Pro Plus Popup Carregado!');
+  
+  // Atualiza status da extensão
+  updateStatus();
+  
+  // Configura os event listeners dos checkboxes
+  setupEventListeners();
+});
 
-    // Botão Configurações
-    document.getElementById('settings').addEventListener('click', function() {
-        alert('Configurações em breve!');
-    });
+function updateStatus() {
+  const statusElement = document.querySelector('.status');
+  if (statusElement) {
+    statusElement.textContent = 'Pronto para usar ✔️';
+    statusElement.style.color = '#00ff00';
+  }
+}
 
-    // Botão Sobre
-    document.getElementById('about').addEventListener('click', function() {
-        alert('Video Pro Plus v1.0.0\nBloqueador universal de anúncios em vídeos');
+function setupEventListeners() {
+  // YouTube Forçar Navegador
+  const youtubeCheckbox = document.querySelector('input[value="youtube"]');
+  if (youtubeCheckbox) {
+    youtubeCheckbox.checked = true; // Sempre ativo
+    youtubeCheckbox.disabled = true; // Não pode desativar
+  }
+  
+  // X/Twitter
+  const twitterCheckbox = document.querySelector('input[value="twitter"]');
+  if (twitterCheckbox) {
+    twitterCheckbox.checked = true;
+    twitterCheckbox.addEventListener('change', function() {
+      console.log('Twitter:', this.checked ? 'Ativado' : 'Desativado');
     });
+  }
+  
+  // TikTok
+  const tiktokCheckbox = document.querySelector('input[value="tiktok"]');
+  if (tiktokCheckbox) {
+    tiktokCheckbox.checked = true;
+    tiktokCheckbox.addEventListener('change', function() {
+      console.log('TikTok:', this.checked ? 'Ativado' : 'Desativado');
+    });
+  }
+  
+  // Tutorial Completo
+  const tutorialCheckbox = document.querySelector('input[value="tutorial"]');
+  if (tutorialCheckbox) {
+    tutorialCheckbox.addEventListener('change', function() {
+      if (this.checked) {
+        window.open('https://youtube.com', '_blank');
+      }
+    });
+  }
+}
 
-    // Verificar status da página atual
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        const currentUrl = tabs[0].url;
-        const statusElement = document.querySelector('.status');
-        
-        if (currentUrl.includes('youtube.com') || 
-            currentUrl.includes('twitter.com') || 
-            currentUrl.includes('tiktok.com') ||
-            currentUrl.includes('rumores.com')) {
-            statusElement.innerHTML = '<strong>Status:</strong> Protegendo esta página ✅';
-        } else {
-            statusElement.innerHTML = '<strong>Status:</strong> Página não suportada ❌';
-        }
-    });
+// Comunicação com background script
+chrome.runtime.sendMessage({action: "getStatus"}, function(response) {
+  console.log('Status da extensão:', response);
 });

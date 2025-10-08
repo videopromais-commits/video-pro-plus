@@ -3,49 +3,43 @@
 <head>
     <meta charset="utf-8">
     <style>
-        body {
-            width: 300px;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .status {
-            background: #f0f0f0;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-        .button {
-            width: 100%;
-            padding: 10px;
-            background: #4285f4;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px 0;
-        }
-        .button:hover {
-            background: #3367d6;
-        }
+        body { width: 300px; padding: 20px; background: #1a1a1a; color: white; font-family: Arial; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .status { color: #00ff00; font-weight: bold; margin: 10px 0; }
+        .feature { margin: 15px 0; padding: 10px; background: #2a2a2a; border-radius: 5px; }
+        input[type="checkbox"] { margin-right: 10px; }
+        label { cursor: pointer; }
+        .disabled { opacity: 0.6; }
     </style>
 </head>
 <body>
     <div class="header">
-        <h2>🎬 Video Pro Plus</h2>
-        <p>Bloqueador Universal de Anúncios</p>
+        <h2>Video Pro Plus</h2>
+        <div class="status">Pronto para usar ✔️</div>
     </div>
-    
-    <div class="status">
-        <strong>Status:</strong> Ativo ✅
+
+    <div class="feature">
+        <input type="checkbox" id="youtube" value="youtube" checked disabled>
+        <label for="youtube" class="disabled">YouTube Forçar Navegador</label>
+        <div style="font-size: 12px; color: #888; margin-top: 5px;">
+            Solução: YouTube insiste em abrir no app
+        </div>
     </div>
-    
-    <button class="button" id="blockAds">Bloquear Anúncios</button>
-    <button class="button" id="settings">Configurações</button>
-    <button class="button" id="about">Sobre</button>
+
+    <div class="feature">
+        <input type="checkbox" id="twitter" value="twitter" checked>
+        <label for="twitter">X/Twitter</label>
+    </div>
+
+    <div class="feature">
+        <input type="checkbox" id="tiktok" value="tiktok" checked>
+        <label for="tiktok">TikTok</label>
+    </div>
+
+    <div class="feature">
+        <input type="checkbox" id="tutorial" value="tutorial">
+        <label for="tutorial">Tutorial Completo</label>
+    </div>
 
     <script src="popup.js"></script>
 </body>

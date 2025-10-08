@@ -50,6 +50,7 @@
         .btn-success { background: #28a745; color: white; }
         .btn-danger { background: #dc3545; color: white; }
         .btn-info { background: #17a2b8; color: white; }
+        .btn-warning { background: #ffc107; color: black; }
         
         .btn:hover {
             transform: translateY(-2px);
@@ -115,6 +116,17 @@
         }
         
         .tutorial h4 { color: #856404; margin-bottom: 10px; }
+        
+        .emergency-section {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: left;
+        }
+        
+        .emergency-section h4 { color: #721c24; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -130,7 +142,7 @@
         <div class="tutorial">
             <h4>🎯 COMO FUNCIONA:</h4>
             <p><strong>• SEM login necessário</strong> - Use sua conta normal</p>
-            <p><strong>• Abre no NAVEGADOR</strong> - Não funciona em apps</p>
+            <p><strong>• Abre no NAVEGADOR</strong> - URLs especiais forçam navegador</p>
             <p><strong>• Bloqueio automático</strong> - Anúncios são removidos</p>
         </div>
         
@@ -157,17 +169,35 @@
             <span>TikTok</span>
         </div>
         
-        <button class="btn btn-primary" onclick="abrirNoNavegador('https://youtube.com', 'YouTube')">
-            📺 Abrir YouTube no Navegador
+        <button class="btn btn-primary" onclick="abrirYouTube()">
+            📺 Abrir YouTube (Forçar Navegador)
         </button>
         
-        <button class="btn btn-success" onclick="abrirNoNavegador('https://twitter.com', 'X/Twitter')">
-            🐦 Abrir X/Twitter no Navegador
+        <button class="btn btn-success" onclick="abrirTwitter()">
+            🐦 Abrir X/Twitter (Forçar Navegador)
         </button>
         
-        <button class="btn btn-danger" onclick="abrirNoNavegador('https://tiktok.com', 'TikTok')">
-            📱 Abrir TikTok no Navegador
+        <button class="btn btn-danger" onclick="abrirTikTok()">
+            📱 Abrir TikTok (Forçar Navegador)
         </button>
+        
+        <div class="emergency-section">
+            <h4>🚨 CASO ABRA NO APP:</h4>
+            <p>1. Toque em "Copiar Link" abaixo</p>
+            <p>2. Cole manualmente no Chrome/Firefox</p>
+            
+            <button class="btn btn-warning" onclick="copiarLinkYouTube()">
+                📋 Copiar Link YouTube
+            </button>
+            
+            <button class="btn btn-warning" onclick="copiarLinkTwitter()">
+                📋 Copiar Link Twitter
+            </button>
+            
+            <button class="btn btn-warning" onclick="copiarLinkTikTok()">
+                📋 Copiar Link TikTok
+            </button>
+        </div>
         
         <button class="btn btn-info" onclick="mostrarTutorialCompleto()">
             📖 Tutorial Completo
@@ -184,6 +214,13 @@
             youtube: true,
             twitter: true,
             tiktok: true
+        };
+
+        // URLs ESPECIAIS que forçam navegador
+        const urlsEspeciais = {
+            youtube: "https://www.youtube.com/?disable_polymer=true&openInBrowser=1",
+            twitter: "https://mobile.twitter.com",
+            tiktok: "https://www.tiktok.com/foryou?noAppRedirect=1"
         };
 
         // Carregar configurações salvas
@@ -218,26 +255,65 @@
             salvarConfiguracoes();
         });
 
-        // FUNÇÃO CORRIGIDA - Forçar navegador
-        function abrirNoNavegador(url, plataforma) {
-            // Verificar se plataforma está ativada
-            if (!config[plataforma.toLowerCase()]) {
-                alert(`❌ ${plataforma} está desativado nas configurações!`);
+        // FUNÇÕES COM URLs ESPECIAIS
+        function abrirYouTube() {
+            if (!config.youtube) {
+                alert('❌ YouTube está desativado nas configurações!');
                 return;
             }
             
-            // Tentar forçar abertura no navegador
-            const novaJanela = window.open(url, '_blank', 'noopener,noreferrer');
-            
-            if (novaJanela) {
-                // Mensagem de sucesso
-                setTimeout(() => {
-                    alert(`✅ ${plataforma} aberto no navegador!\n\n📱 Use sua conta normal - o bloqueador funcionará automaticamente!`);
-                }, 500);
-            } else {
-                // Se bloqueou popup
-                alert(`📱 ${plataforma}\n\n⚠️ Copie e cole no navegador:\n${url}\n\n💡 Dica: Permita popups para abrir automaticamente.`);
+            const novaJanela = window.open(urlsEspeciais.youtube, '_blank', 'noopener,noreferrer');
+            verificarAbertura(novaJanela, 'YouTube');
+        }
+
+        function abrirTwitter() {
+            if (!config.twitter) {
+                alert('❌ X/Twitter está desativado nas configurações!');
+                return;
             }
+            
+            const novaJanela = window.open(urlsEspeciais.twitter, '_blank', 'noopener,noreferrer');
+            verificarAbertura(novaJanela, 'X/Twitter');
+        }
+
+        function abrirTikTok() {
+            if (!config.tiktok) {
+                alert('❌ TikTok está desativado nas configurações!');
+                return;
+            }
+            
+            const novaJanela = window.open(urlsEspeciais.tiktok, '_blank', 'noopener,noreferrer');
+            verificarAbertura(novaJanela, 'TikTok');
+        }
+
+        // Verificar se abriu corretamente
+        function verificarAbertura(janela, plataforma) {
+            setTimeout(() => {
+                if (janela && !janela.closed) {
+                    alert(`✅ ${plataforma} aberto no NAVEGADOR!\n\nUse sua conta normal - bloqueador ativo!`);
+                } else {
+                    alert(`⚠️ ${plataforma} pode ter aberto no app.\n\nUse os botões "Copiar Link" e cole no Chrome/Firefox!`);
+                }
+            }, 1000);
+        }
+
+        // FUNÇÕES DE COPIA DE LINK (fallback)
+        function copiarLinkYouTube() {
+            navigator.clipboard.writeText(urlsEspeciais.youtube).then(() => {
+                alert('📋 Link YouTube copiado! Cole no Chrome/Firefox.');
+            });
+        }
+
+        function copiarLinkTwitter() {
+            navigator.clipboard.writeText(urlsEspeciais.twitter).then(() => {
+                alert('📋 Link Twitter copiado! Cole no Chrome/Firefox.');
+            });
+        }
+
+        function copiarLinkTikTok() {
+            navigator.clipboard.writeText(urlsEspeciais.tiktok).then(() => {
+                alert('📋 Link TikTok copiado! Cole no Chrome/Firefox.');
+            });
         }
 
         // Tutorial completo
@@ -249,19 +325,18 @@
    • Ative/desative plataformas acima
    • Configurações são salvas automaticamente
 
-2️⃣ USO:
-   • Clique em "Abrir no Navegador"
-   • Use sua CONTA NORMAL (não precisa cadastro)
-   • Anúncios são bloqueados automaticamente
+2️⃣ USO NORMAL:
+   • Clique em "Abrir (Forçar Navegador)"
+   • URLs especiais tentam forçar navegador
 
-3️⃣ PLATAFORMAS:
-   • YouTube: Remove anúncios de vídeo
-   • X/Twitter: Remove posts promovidos  
-   • TikTok: Limpa feed de anúncios
+3️⃣ CASO ABRA NO APP:
+   • Use botões "Copiar Link" 
+   • Cole manualmente no Chrome/Firefox
+   • Funciona com QUALQUER conta logada
 
 4️⃣ DICAS:
    • Adicione esta página à tela inicial
-   • Use sempre pelo NAVEGADOR (Chrome/Firefox)
+   • Use sempre pelo NAVEGADOR
    • Não funciona em APPS nativos
 
 🚀 Aproveite a experiência sem anúncios!

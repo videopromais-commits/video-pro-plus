@@ -127,6 +127,40 @@
             font-weight: bold;
         }
         
+        .social-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .btn-youtube { background: linear-gradient(45deg, #FF0000, #CC0000); }
+        .btn-twitter { background: linear-gradient(45deg, #1DA1F2, #0d8bd9); }
+        .btn-tiktok { background: linear-gradient(45deg, #000000, #333333); }
+        .btn-instagram { background: linear-gradient(45deg, #E4405F, #C13584); }
+        .btn-facebook { background: linear-gradient(45deg, #1877F2, #0d5fbf); }
+        .btn-blogs { background: linear-gradient(45deg, #9C27B0, #7B1FA2); }
+        
         .sites-section {
             background: rgba(156, 39, 176, 0.1);
             border: 1px solid #9c27b0;
@@ -205,6 +239,28 @@
             <p><strong>Solução:</strong> Use a função "YouTube Forçar Navegador" na extensão</p>
         </div>
 
+        <!-- BOTÕES DAS REDES SOCIAIS -->
+        <div class="social-buttons">
+            <a href="https://youtube.com" class="social-btn btn-youtube" target="_blank">
+                <span>🎬</span> YouTube
+            </a>
+            <a href="https://x.com" class="social-btn btn-twitter" target="_blank">
+                <span>🐦</span> X/Twitter
+            </a>
+            <a href="https://tiktok.com" class="social-btn btn-tiktok" target="_blank">
+                <span>🎵</span> TikTok
+            </a>
+            <a href="https://instagram.com" class="social-btn btn-instagram" target="_blank">
+                <span>📷</span> Instagram
+            </a>
+            <a href="https://facebook.com" class="social-btn btn-facebook" target="_blank">
+                <span>👥</span> Facebook
+            </a>
+            <a href="#blogs" class="social-btn btn-blogs">
+                <span>📝</span> Blogs
+            </a>
+        </div>
+
         <div class="install-steps">
             <h3>📥 COMO INSTALAR:</h3>
             <ol class="steps">
@@ -241,6 +297,27 @@
                         Feed e vídeos
                     </div>
                 </div>
+                <div class="site-card">
+                    <div class="site-icon">📷</div>
+                    <strong>Instagram</strong>
+                    <div style="font-size: 0.8em; color: #cccccc; margin-top: 5px;">
+                        Stories e Reels
+                    </div>
+                </div>
+                <div class="site-card">
+                    <div class="site-icon">👥</div>
+                    <strong>Facebook</strong>
+                    <div style="font-size: 0.8em; color: #cccccc; margin-top: 5px;">
+                        Vídeos e Feed
+                    </div>
+                </div>
+                <div class="site-card">
+                    <div class="site-icon">📝</div>
+                    <strong>Blogs/Sites</strong>
+                    <div style="font-size: 0.8em; color: #cccccc; margin-top: 5px;">
+                        Bloqueio de anúncios
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -248,5 +325,16 @@
             Video Pro Plus &copy; 2025 - Bloqueador Universal de Anúncios
         </div>
     </div>
+
+    <script>
+        // Adiciona funcionalidade aos botões
+        document.addEventListener('DOMContentLoaded', function() {
+            // Botão Blogs - Explica funcionalidade
+            document.querySelector('.btn-blogs').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('📝 BLOQUEIO DE ANÚNCIOS EM BLOG:\n\nA extensão bloqueia anúncios automaticamente em sites como:\n• Blogspot • WordPress • Medium\n• Weebly • Wixsite • e outros\n\nFunciona sem login! Basta navegar normalmente.');
+            });
+        });
+    </script>
 </body>
 </html>

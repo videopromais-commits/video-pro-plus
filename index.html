@@ -5,11 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Pro Plus - Bloqueador Universal</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: Arial, sans-serif;
@@ -28,15 +24,8 @@
             text-align: center;
         }
         
-        .logo {
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-        }
+        .logo { font-size: 3em; margin-bottom: 20px; }
+        h1 { color: #333; margin-bottom: 10px; }
         
         .status {
             background: #f8f9fa;
@@ -57,15 +46,9 @@
             transition: all 0.3s;
         }
         
-        .btn-primary {
-            background: #007bff;
-            color: white;
-        }
-        
-        .btn-success {
-            background: #28a745;
-            color: white;
-        }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-danger { background: #dc3545; color: white; }
         
         .btn:hover {
             transform: translateY(-2px);
@@ -77,10 +60,49 @@
             margin: 20px 0;
         }
         
-        .features li {
-            margin: 10px 0;
-            padding-left: 20px;
+        .features li { margin: 10px 0; padding-left: 20px; }
+        
+        .config-section {
+            text-align: left;
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
         }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin: 10px 0;
+        }
+        
+        .switch input { opacity: 0; width: 0; height: 0; }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider { background-color: #28a745; }
+        input:checked + .slider:before { transform: translateX(26px); }
     </style>
 </head>
 <body>
@@ -89,59 +111,132 @@
         <h1>Video Pro Plus</h1>
         <p>Bloqueador Universal de Anúncios em Vídeos</p>
         
-        <div class="status">
-            <strong>Status:</strong> Online e Funcionando ✅
+        <div class="status" id="status">
+            <strong>Status:</strong> Pronto para usar ✅
+        </div>
+        
+        <div class="config-section">
+            <h3>⚙️ Configurações:</h3>
+            <label class="switch">
+                <input type="checkbox" id="toggleYouTube" checked>
+                <span class="slider"></span>
+            </label>
+            <span>YouTube</span>
+            <br>
+            
+            <label class="switch">
+                <input type="checkbox" id="toggleTwitter" checked>
+                <span class="slider"></span>
+            </label>
+            <span>X/Twitter</span>
+            <br>
+            
+            <label class="switch">
+                <input type="checkbox" id="toggleTikTok" checked>
+                <span class="slider"></span>
+            </label>
+            <span>TikTok</span>
         </div>
         
         <div class="features">
-            <h3>📋 Funcionalidades:</h3>
+            <h3>📋 Como usar:</h3>
             <ul>
-                <li>🚫 Bloqueia anúncios no YouTube</li>
-                <li>🐦 Remove promoted posts no X/Twitter</li>
-                <li>📱 Limpa feed do TikTok</li>
-                <li>🎯 Suporte a Rumores e outras plataformas</li>
-                <li>⚡ Leve e rápido</li>
+                <li>1. Ative as plataformas desejadas acima</li>
+                <li>2. Clique em "Abrir Plataforma" abaixo</li>
+                <li>3. O bloqueador funcionará automaticamente</li>
+                <li>4. Anúncios serão removidos em tempo real</li>
             </ul>
         </div>
         
-        <button class="btn btn-primary" onclick="ativarBloqueador()">
-            🚀 Ativar Bloqueador
+        <button class="btn btn-primary" onclick="abrirYouTube()">
+            📺 Abrir YouTube
         </button>
         
-        <button class="btn btn-success" onclick="testarPlataformas()">
-            🔍 Testar Plataformas
+        <button class="btn btn-success" onclick="abrirTwitter()">
+            🐦 Abrir X/Twitter
         </button>
         
+        <button class="btn btn-danger" onclick="abrirTikTok()">
+            📱 Abrir TikTok
+        </button>
+
         <div style="margin-top: 20px; font-size: 12px; color: #666;">
             💡 Dica: Adicione esta página à tela inicial para acesso rápido!
         </div>
     </div>
 
     <script>
-        function ativarBloqueador() {
-            alert('Bloqueador ativado! Acesse YouTube, X, TikTok ou Rumores para testar.');
+        // Configurações do usuário
+        let config = {
+            youtube: true,
+            twitter: true,
+            tiktok: true
+        };
+
+        // Carregar configurações salvas
+        function carregarConfiguracoes() {
+            const salvo = localStorage.getItem('videoProPlusConfig');
+            if (salvo) {
+                config = JSON.parse(salvo);
+                document.getElementById('toggleYouTube').checked = config.youtube;
+                document.getElementById('toggleTwitter').checked = config.twitter;
+                document.getElementById('toggleTikTok').checked = config.tiktok;
+            }
         }
-        
-        function testarPlataformas() {
-            const platforms = [
-                {name: 'YouTube', url: 'https://youtube.com'},
-                {name: 'X/Twitter', url: 'https://twitter.com'},
-                {name: 'TikTok', url: 'https://tiktok.com'},
-                {name: 'Rumores', url: 'https://rumores.com'}
-            ];
-            
-            let message = 'Plataformas suportadas:\n\n';
-            platforms.forEach(platform => {
-                message += `• ${platform.name}\n`;
-            });
-            message += '\nAcesse qualquer uma para testar o bloqueador!';
-            
-            alert(message);
+
+        // Salvar configurações
+        function salvarConfiguracoes() {
+            localStorage.setItem('videoProPlusConfig', JSON.stringify(config));
         }
+
+        // Ouvir mudanças nas configurações
+        document.getElementById('toggleYouTube').addEventListener('change', function() {
+            config.youtube = this.checked;
+            salvarConfiguracoes();
+        });
+
+        document.getElementById('toggleTwitter').addEventListener('change', function() {
+            config.twitter = this.checked;
+            salvarConfiguracoes();
+        });
+
+        document.getElementById('toggleTikTok').addEventListener('change', function() {
+            config.tiktok = this.checked;
+            salvarConfiguracoes();
+        });
+
+        // Funções para abrir plataformas
+        function abrirYouTube() {
+            if (config.youtube) {
+                window.open('https://youtube.com', '_blank');
+            } else {
+                alert('YouTube está desativado nas configurações!');
+            }
+        }
+
+        function abrirTwitter() {
+            if (config.twitter) {
+                window.open('https://twitter.com', '_blank');
+            } else {
+                alert('X/Twitter está desativado nas configurações!');
+            }
+        }
+
+        function abrirTikTok() {
+            if (config.tiktok) {
+                window.open('https://tiktok.com', '_blank');
+            } else {
+                alert('TikTok está desativado nas configurações!');
+            }
+        }
+
+        // Inicializar
+        carregarConfiguracoes();
         
         // Detectar se é PWA
         if (window.matchMedia('(display-mode: standalone)').matches) {
             console.log('Executando como PWA');
+            document.getElementById('status').innerHTML = '<strong>Status:</strong> PWA Ativo 🚀';
         }
     </script>
 </body>

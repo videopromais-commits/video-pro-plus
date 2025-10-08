@@ -1,33 +1,28 @@
 {
   "manifest_version": 3,
   "name": "Video Pro Plus",
-  "version": "1.0.0",
-  "description": "Bloqueador de anúncios universal para vídeos",
-  "permissions": [
-    "activeTab",
-    "storage"
-  ],
+  "version": "1.0",
+  "description": "Bloqueador Universal de Anúncios em Videos",
+  "permissions": ["webNavigation"],
   "host_permissions": [
     "https://*.youtube.com/*",
+    "https://youtu.be/*",
     "https://*.twitter.com/*",
-    "https://*.tiktok.com/*",
-    "https://*.rumores.com/*"
+    "https://x.com/*",
+    "https://*.tiktok.com/*"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
-      "matches": [
-        "https://*.youtube.com/*",
-        "https://*.twitter.com/*",
-        "https://*.tiktok.com/*",
-        "https://*.rumores.com/*"
-      ],
+      "matches": ["*://*/*"],
       "js": ["content.js"],
-      "run_at": "document_end"
+      "run_at": "document_start"
     }
   ],
   "action": {
-    "default_popup": "popup.html",
-    "default_title": "Video Pro Plus"
+    "default_popup": "popup.html"
   },
   "icons": {
     "16": "icon16.png",

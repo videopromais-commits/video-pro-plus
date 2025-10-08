@@ -50,71 +50,23 @@
         .btn-success { background: #28a745; color: white; }
         .btn-danger { background: #dc3545; color: white; }
         .btn-info { background: #17a2b8; color: white; }
+        .btn-warning { background: #ffc107; color: black; }
         
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
-        .features {
-            text-align: left;
-            margin: 20px 0;
-        }
-        
-        .features li { margin: 10px 0; padding-left: 20px; }
-        
-        .config-section {
-            text-align: left;
-            margin: 20px 0;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-        }
-        
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-            margin: 10px 0;
-        }
-        
-        .switch input { opacity: 0; width: 0; height: 0; }
-        
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        
-        input:checked + .slider { background-color: #28a745; }
-        input:checked + .slider:before { transform: translateX(26px); }
-        
-        .tutorial {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
+        .youtube-fix {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
             border-radius: 10px;
             padding: 15px;
             margin: 15px 0;
             text-align: left;
         }
         
-        .tutorial h4 { color: #856404; margin-bottom: 10px; }
+        .youtube-fix h4 { color: #0c5460; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -127,46 +79,22 @@
             <strong>Status:</strong> Pronto para usar ✅
         </div>
         
-        <div class="tutorial">
-            <h4>🎯 COMO FUNCIONA:</h4>
-            <p><strong>• Escolha sua conta</strong> - Abre na página de login</p>
-            <p><strong>• Funciona na 1ª tentativa</strong> - Sem fallback necessário</p>
-            <p><strong>• Bloqueio automático</strong> - Anúncios são removidos</p>
+        <div class="youtube-fix">
+            <h4>🔧 SOLUÇÃO YOUTUBE:</h4>
+            <p><strong>Problema:</strong> YouTube insiste em abrir no app</p>
+            <p><strong>Solução:</strong> Use "YouTube Forçar Navegador" abaixo</p>
         </div>
         
-        <div class="config-section">
-            <h3>⚙️ Configurações:</h3>
-            <label class="switch">
-                <input type="checkbox" id="toggleYouTube" checked>
-                <span class="slider"></span>
-            </label>
-            <span>YouTube</span>
-            <br>
-            
-            <label class="switch">
-                <input type="checkbox" id="toggleTwitter" checked>
-                <span class="slider"></span>
-            </label>
-            <span>X/Twitter</span>
-            <br>
-            
-            <label class="switch">
-                <input type="checkbox" id="toggleTikTok" checked>
-                <span class="slider"></span>
-            </label>
-            <span>TikTok</span>
-        </div>
-        
-        <button class="btn btn-primary" onclick="abrirYouTube()">
-            📺 Abrir YouTube (Escolher Conta)
+        <button class="btn btn-primary" onclick="abrirYouTubeForcado()">
+            🔧 YouTube Forçar Navegador
         </button>
         
         <button class="btn btn-success" onclick="abrirTwitter()">
-            🐦 Abrir X/Twitter (Escolher Conta)
+            🐦 X/Twitter
         </button>
         
         <button class="btn btn-danger" onclick="abrirTikTok()">
-            📱 Abrir TikTok (Escolher Conta)
+            📱 TikTok
         </button>
         
         <button class="btn btn-info" onclick="mostrarTutorialCompleto()">
@@ -179,83 +107,55 @@
     </div>
 
     <script>
-        // Configurações do usuário
-        let config = {
-            youtube: true,
-            twitter: true,
-            tiktok: true
-        };
-
-        // URLs DEFINITIVAS - PÁGINAS DE LOGIN
-        const urlsLogin = {
-            youtube: "https://www.youtube.com",
-            twitter: "https://twitter.com/i/flow/login", 
+        // URLs ESPECIAIS PARA FORÇAR NAVEGADOR
+        const urlsEspeciais = {
+            // Várias tentativas para YouTube
+            youtube: [
+                "https://m.youtube.com", // Versão mobile
+                "https://www.youtube.com/?app=desktop", // Forçar desktop
+                "https://youtube.com/?noapp=1", // Tentativa sem app
+                "https://www.youtube.com/?persist_app=0" // Não persistir app
+            ],
+            twitter: "https://twitter.com/i/flow/login",
             tiktok: "https://www.tiktok.com/login"
         };
 
-        // Carregar configurações salvas
-        function carregarConfiguracoes() {
-            const salvo = localStorage.getItem('videoProPlusConfig');
-            if (salvo) {
-                config = JSON.parse(salvo);
-                document.getElementById('toggleYouTube').checked = config.youtube;
-                document.getElementById('toggleTwitter').checked = config.twitter;
-                document.getElementById('toggleTikTok').checked = config.tiktok;
-            }
-        }
-
-        // Salvar configurações
-        function salvarConfiguracoes() {
-            localStorage.setItem('videoProPlusConfig', JSON.stringify(config));
-        }
-
-        // Ouvir mudanças nas configurações
-        document.getElementById('toggleYouTube').addEventListener('change', function() {
-            config.youtube = this.checked;
-            salvarConfiguracoes();
-        });
-
-        document.getElementById('toggleTwitter').addEventListener('change', function() {
-            config.twitter = this.checked;
-            salvarConfiguracoes();
-        });
-
-        document.getElementById('toggleTikTok').addEventListener('change', function() {
-            config.tiktok = this.checked;
-            salvarConfiguracoes();
-        });
-
-        // FUNÇÕES DEFINITIVAS - PÁGINAS DE LOGIN
-        function abrirYouTube() {
-            if (!config.youtube) {
-                alert('❌ YouTube está desativado nas configurações!');
-                return;
+        // Função ESPECIAL para YouTube
+        function abrirYouTubeForcado() {
+            let tentativa = 0;
+            const maxTentativas = urlsEspeciais.youtube.length;
+            
+            function tentarAbrir() {
+                if (tentativa >= maxTentativas) {
+                    alert('❌ YouTube teimoso! Tente manualmente:\n1. Abra Chrome/Firefox\n2. Digite: youtube.com\n3. Use nossa extensão quando publicada');
+                    return;
+                }
+                
+                const url = urlsEspeciais.youtube[tentativa];
+                const novaJanela = window.open(url, '_blank', 'noopener,noreferrer');
+                
+                setTimeout(() => {
+                    if (novaJanela && !novaJanela.closed) {
+                        alert('✅ YouTube aberto no navegador! Faça login e aproveite sem anúncios!');
+                    } else {
+                        tentativa++;
+                        alert(`🔄 Tentativa ${tentativa}/${maxTentativas}... Tentando método alternativo.`);
+                        tentarAbrir();
+                    }
+                }, 1000);
             }
             
-            // YouTube já funciona bem com URL normal
-            window.open(urlsLogin.youtube, '_blank', 'noopener,noreferrer');
-            alert('✅ YouTube aberto! Escolha sua conta e aproveite sem anúncios!');
+            tentarAbrir();
         }
 
+        // Funções normais para outras plataformas
         function abrirTwitter() {
-            if (!config.twitter) {
-                alert('❌ X/Twitter está desativado nas configurações!');
-                return;
-            }
-            
-            // Twitter com página de login específica
-            window.open(urlsLogin.twitter, '_blank', 'noopener,noreferrer');
+            window.open(urlsEspeciais.twitter, '_blank', 'noopener,noreferrer');
             alert('✅ X/Twitter aberto! Faça login e remova posts promovidos!');
         }
 
         function abrirTikTok() {
-            if (!config.tiktok) {
-                alert('❌ TikTok está desativado nas configurações!');
-                return;
-            }
-            
-            // TikTok com página de login
-            window.open(urlsLogin.tiktok, '_blank', 'noopener,noreferrer');
+            window.open(urlsEspeciais.tiktok, '_blank', 'noopener,noreferrer');
             alert('✅ TikTok aberto! Entre na sua conta e limpe o feed!');
         }
 
@@ -264,633 +164,31 @@
             const tutorial = `
 🎬 TUTORIAL VIDEO PRO PLUS:
 
-1️⃣ CONFIGURAÇÃO:
-   • Ative/desative plataformas acima
-   • Configurações são salvas automaticamente
+📺 YOUTUBE:
+• Use "YouTube Forçar Navegador"
+• Tenta múltiplos métodos automaticamente
+• Funciona na maioria dos dispositivos
 
-2️⃣ USO SIMPLES:
-   • Clique em "Abrir (Escolher Conta)"
-   • Faça login na sua conta preferida
-   • Bloqueador funciona automaticamente
+🐦 X/TWITTER:
+• Abre direto na página de login
+• Remove posts promovidos
+• Funciona na primeira tentativa
 
-3️⃣ FUNCIONALIDADES:
-   • YouTube: Remove anúncios de vídeo
-   • X/Twitter: Elimina posts promovidos
-   • TikTok: Limpa feed de anúncios
+📱 TIKTOK:
+• Página de login direta
+• Limpa feed de anúncios
+• Experiência limpa
 
-4️⃣ VANTAGENS:
-   • Funciona na PRIMEIRA tentativa
-   • Escolha QUALQUER conta
-   • Experiência sem interrupções
+🚀 EM BREVE:
+• Extensão Firefox/Chrome
+• Bloqueador mais eficiente
+• Mais plataformas
 
-🚀 Aproveite a navegação sem anúncios!
+💡 Use sempre pelo NAVEGADOR (não apps)!
             `;
             alert(tutorial);
         }
 
-        // Inicializar
-        carregarConfiguracoes();
-        
-        // Detectar se é PWA
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            console.log('Executando como PWA');
-            document.getElementById('status').innerHTML = '<strong>Status:</strong> PWA Ativo 🚀';
-        }
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Pro Plus - Bloqueador Universal</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            text-align: center;
-        }
-        
-        .logo { font-size: 3em; margin-bottom: 20px; }
-        h1 { color: #333; margin-bottom: 10px; }
-        
-        .status {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 4px solid #28a745;
-        }
-        
-        .btn {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary { background: #007bff; color: white; }
-        .btn-success { background: #28a745; color: white; }
-        .btn-danger { background: #dc3545; color: white; }
-        .btn-info { background: #17a2b8; color: white; }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .features {
-            text-align: left;
-            margin: 20px 0;
-        }
-        
-        .features li { margin: 10px 0; padding-left: 20px; }
-        
-        .config-section {
-            text-align: left;
-            margin: 20px 0;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-        }
-        
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-            margin: 10px 0;
-        }
-        
-        .switch input { opacity: 0; width: 0; height: 0; }
-        
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        
-        input:checked + .slider { background-color: #28a745; }
-        input:checked + .slider:before { transform: translateX(26px); }
-        
-        .tutorial {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-            text-align: left;
-        }
-        
-        .tutorial h4 { color: #856404; margin-bottom: 10px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="logo">🎬</div>
-        <h1>Video Pro Plus</h1>
-        <p>Bloqueador Universal de Anúncios em Vídeos</p>
-        
-        <div class="status" id="status">
-            <strong>Status:</strong> Pronto para usar ✅
-        </div>
-        
-        <div class="tutorial">
-            <h4>🎯 COMO FUNCIONA:</h4>
-            <p><strong>• Escolha sua conta</strong> - Abre na página de login</p>
-            <p><strong>• Funciona na 1ª tentativa</strong> - Sem fallback necessário</p>
-            <p><strong>• Bloqueio automático</strong> - Anúncios são removidos</p>
-        </div>
-        
-        <div class="config-section">
-            <h3>⚙️ Configurações:</h3>
-            <label class="switch">
-                <input type="checkbox" id="toggleYouTube" checked>
-                <span class="slider"></span>
-            </label>
-            <span>YouTube</span>
-            <br>
-            
-            <label class="switch">
-                <input type="checkbox" id="toggleTwitter" checked>
-                <span class="slider"></span>
-            </label>
-            <span>X/Twitter</span>
-            <br>
-            
-            <label class="switch">
-                <input type="checkbox" id="toggleTikTok" checked>
-                <span class="slider"></span>
-            </label>
-            <span>TikTok</span>
-        </div>
-        
-        <button class="btn btn-primary" onclick="abrirYouTube()">
-            📺 Abrir YouTube (Escolher Conta)
-        </button>
-        
-        <button class="btn btn-success" onclick="abrirTwitter()">
-            🐦 Abrir X/Twitter (Escolher Conta)
-        </button>
-        
-        <button class="btn btn-danger" onclick="abrirTikTok()">
-            📱 Abrir TikTok (Escolher Conta)
-        </button>
-        
-        <button class="btn btn-info" onclick="mostrarTutorialCompleto()">
-            📖 Tutorial Completo
-        </button>
-
-        <div style="margin-top: 20px; font-size: 12px; color: #666;">
-            💡 Dica: Adicione esta página à tela inicial para acesso rápido!
-        </div>
-    </div>
-
-    <script>
-        // Configurações do usuário
-        let config = {
-            youtube: true,
-            twitter: true,
-            tiktok: true
-        };
-
-        // URLs DEFINITIVAS - PÁGINAS DE LOGIN
-        const urlsLogin = {
-            youtube: "https://www.youtube.com",
-            twitter: "https://twitter.com/i/flow/login", 
-            tiktok: "https://www.tiktok.com/login"
-        };
-
-        // Carregar configurações salvas
-        function carregarConfiguracoes() {
-            const salvo = localStorage.getItem('videoProPlusConfig');
-            if (salvo) {
-                config = JSON.parse(salvo);
-                document.getElementById('toggleYouTube').checked = config.youtube;
-                document.getElementById('toggleTwitter').checked = config.twitter;
-                document.getElementById('toggleTikTok').checked = config.tiktok;
-            }
-        }
-
-        // Salvar configurações
-        function salvarConfiguracoes() {
-            localStorage.setItem('videoProPlusConfig', JSON.stringify(config));
-        }
-
-        // Ouvir mudanças nas configurações
-        document.getElementById('toggleYouTube').addEventListener('change', function() {
-            config.youtube = this.checked;
-            salvarConfiguracoes();
-        });
-
-        document.getElementById('toggleTwitter').addEventListener('change', function() {
-            config.twitter = this.checked;
-            salvarConfiguracoes();
-        });
-
-        document.getElementById('toggleTikTok').addEventListener('change', function() {
-            config.tiktok = this.checked;
-            salvarConfiguracoes();
-        });
-
-        // FUNÇÕES DEFINITIVAS - PÁGINAS DE LOGIN
-        function abrirYouTube() {
-            if (!config.youtube) {
-                alert('❌ YouTube está desativado nas configurações!');
-                return;
-            }
-            
-            // YouTube já funciona bem com URL normal
-            window.open(urlsLogin.youtube, '_blank', 'noopener,noreferrer');
-            alert('✅ YouTube aberto! Escolha sua conta e aproveite sem anúncios!');
-        }
-
-        function abrirTwitter() {
-            if (!config.twitter) {
-                alert('❌ X/Twitter está desativado nas configurações!');
-                return;
-            }
-            
-            // Twitter com página de login específica
-            window.open(urlsLogin.twitter, '_blank', 'noopener,noreferrer');
-            alert('✅ X/Twitter aberto! Faça login e remova posts promovidos!');
-        }
-
-        function abrirTikTok() {
-            if (!config.tiktok) {
-                alert('❌ TikTok está desativado nas configurações!');
-                return;
-            }
-            
-            // TikTok com página de login
-            window.open(urlsLogin.tiktok, '_blank', 'noopener,noreferrer');
-            alert('✅ TikTok aberto! Entre na sua conta e limpe o feed!');
-        }
-
-        // Tutorial completo
-        function mostrarTutorialCompleto() {
-            const tutorial = `
-🎬 TUTORIAL VIDEO PRO PLUS:
-
-1️⃣ CONFIGURAÇÃO:
-   • Ative/desative plataformas acima
-   • Configurações são salvas automaticamente
-
-2️⃣ USO SIMPLES:
-   • Clique em "Abrir (Escolher Conta)"
-   • Faça login na sua conta preferida
-   • Bloqueador funciona automaticamente
-
-3️⃣ FUNCIONALIDADES:
-   • YouTube: Remove anúncios de vídeo
-   • X/Twitter: Elimina posts promovidos
-   • TikTok: Limpa feed de anúncios
-
-4️⃣ VANTAGENS:
-   • Funciona na PRIMEIRA tentativa
-   • Escolha QUALQUER conta
-   • Experiência sem interrupções
-
-🚀 Aproveite a navegação sem anúncios!
-            `;
-            alert(tutorial);
-        }
-
-        // Inicializar
-        carregarConfiguracoes();
-        
-        // Detectar se é PWA
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            console.log('Executando como PWA');
-            document.getElementById('status').innerHTML = '<strong>Status:</strong> PWA Ativo 🚀';
-        }
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Pro Plus - Bloqueador Universal</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            text-align: center;
-        }
-        
-        .logo { font-size: 3em; margin-bottom: 20px; }
-        h1 { color: #333; margin-bottom: 10px; }
-        
-        .status {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 4px solid #28a745;
-        }
-        
-        .btn {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .btn-primary { background: #007bff; color: white; }
-        .btn-success { background: #28a745; color: white; }
-        .btn-danger { background: #dc3545; color: white; }
-        .btn-info { background: #17a2b8; color: white; }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .features {
-            text-align: left;
-            margin: 20px 0;
-        }
-        
-        .features li { margin: 10px 0; padding-left: 20px; }
-        
-        .config-section {
-            text-align: left;
-            margin: 20px 0;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-        }
-        
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-            margin: 10px 0;
-        }
-        
-        .switch input { opacity: 0; width: 0; height: 0; }
-        
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        
-        input:checked + .slider { background-color: #28a745; }
-        input:checked + .slider:before { transform: translateX(26px); }
-        
-        .tutorial {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-            text-align: left;
-        }
-        
-        .tutorial h4 { color: #856404; margin-bottom: 10px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="logo">🎬</div>
-        <h1>Video Pro Plus</h1>
-        <p>Bloqueador Universal de Anúncios em Vídeos</p>
-        
-        <div class="status" id="status">
-            <strong>Status:</strong> Pronto para usar ✅
-        </div>
-        
-        <div class="tutorial">
-            <h4>🎯 COMO FUNCIONA:</h4>
-            <p><strong>• Escolha sua conta</strong> - Abre na página de login</p>
-            <p><strong>• Funciona na 1ª tentativa</strong> - Sem fallback necessário</p>
-            <p><strong>• Bloqueio automático</strong> - Anúncios são removidos</p>
-        </div>
-        
-        <div class="config-section">
-            <h3>⚙️ Configurações:</h3>
-            <label class="switch">
-                <input type="checkbox" id="toggleYouTube" checked>
-                <span class="slider"></span>
-            </label>
-            <span>YouTube</span>
-            <br>
-            
-            <label class="switch">
-                <input type="checkbox" id="toggleTwitter" checked>
-                <span class="slider"></span>
-            </label>
-            <span>X/Twitter</span>
-            <br>
-            
-            <label class="switch">
-                <input type="checkbox" id="toggleTikTok" checked>
-                <span class="slider"></span>
-            </label>
-            <span>TikTok</span>
-        </div>
-        
-        <button class="btn btn-primary" onclick="abrirYouTube()">
-            📺 Abrir YouTube (Escolher Conta)
-        </button>
-        
-        <button class="btn btn-success" onclick="abrirTwitter()">
-            🐦 Abrir X/Twitter (Escolher Conta)
-        </button>
-        
-        <button class="btn btn-danger" onclick="abrirTikTok()">
-            📱 Abrir TikTok (Escolher Conta)
-        </button>
-        
-        <button class="btn btn-info" onclick="mostrarTutorialCompleto()">
-            📖 Tutorial Completo
-        </button>
-
-        <div style="margin-top: 20px; font-size: 12px; color: #666;">
-            💡 Dica: Adicione esta página à tela inicial para acesso rápido!
-        </div>
-    </div>
-
-    <script>
-        // Configurações do usuário
-        let config = {
-            youtube: true,
-            twitter: true,
-            tiktok: true
-        };
-
-        // URLs DEFINITIVAS - PÁGINAS DE LOGIN
-        const urlsLogin = {
-            youtube: "https://www.youtube.com",
-            twitter: "https://twitter.com/i/flow/login", 
-            tiktok: "https://www.tiktok.com/login"
-        };
-
-        // Carregar configurações salvas
-        function carregarConfiguracoes() {
-            const salvo = localStorage.getItem('videoProPlusConfig');
-            if (salvo) {
-                config = JSON.parse(salvo);
-                document.getElementById('toggleYouTube').checked = config.youtube;
-                document.getElementById('toggleTwitter').checked = config.twitter;
-                document.getElementById('toggleTikTok').checked = config.tiktok;
-            }
-        }
-
-        // Salvar configurações
-        function salvarConfiguracoes() {
-            localStorage.setItem('videoProPlusConfig', JSON.stringify(config));
-        }
-
-        // Ouvir mudanças nas configurações
-        document.getElementById('toggleYouTube').addEventListener('change', function() {
-            config.youtube = this.checked;
-            salvarConfiguracoes();
-        });
-
-        document.getElementById('toggleTwitter').addEventListener('change', function() {
-            config.twitter = this.checked;
-            salvarConfiguracoes();
-        });
-
-        document.getElementById('toggleTikTok').addEventListener('change', function() {
-            config.tiktok = this.checked;
-            salvarConfiguracoes();
-        });
-
-        // FUNÇÕES DEFINITIVAS - PÁGINAS DE LOGIN
-        function abrirYouTube() {
-            if (!config.youtube) {
-                alert('❌ YouTube está desativado nas configurações!');
-                return;
-            }
-            
-            // YouTube já funciona bem com URL normal
-            window.open(urlsLogin.youtube, '_blank', 'noopener,noreferrer');
-            alert('✅ YouTube aberto! Escolha sua conta e aproveite sem anúncios!');
-        }
-
-        function abrirTwitter() {
-            if (!config.twitter) {
-                alert('❌ X/Twitter está desativado nas configurações!');
-                return;
-            }
-            
-            // Twitter com página de login específica
-            window.open(urlsLogin.twitter, '_blank', 'noopener,noreferrer');
-            alert('✅ X/Twitter aberto! Faça login e remova posts promovidos!');
-        }
-
-        function abrirTikTok() {
-            if (!config.tiktok) {
-                alert('❌ TikTok está desativado nas configurações!');
-                return;
-            }
-            
-            // TikTok com página de login
-            window.open(urlsLogin.tiktok, '_blank', 'noopener,noreferrer');
-            alert('✅ TikTok aberto! Entre na sua conta e limpe o feed!');
-        }
-
-        // Tutorial completo
-        function mostrarTutorialCompleto() {
-            const tutorial = `
-🎬 TUTORIAL VIDEO PRO PLUS:
-
-1️⃣ CONFIGURAÇÃO:
-   • Ative/desative plataformas acima
-   • Configurações são salvas automaticamente
-
-2️⃣ USO SIMPLES:
-   • Clique em "Abrir (Escolher Conta)"
-   • Faça login na sua conta preferida
-   • Bloqueador funciona automaticamente
-
-3️⃣ FUNCIONALIDADES:
-   • YouTube: Remove anúncios de vídeo
-   • X/Twitter: Elimina posts promovidos
-   • TikTok: Limpa feed de anúncios
-
-4️⃣ VANTAGENS:
-   • Funciona na PRIMEIRA tentativa
-   • Escolha QUALQUER conta
-   • Experiência sem interrupções
-
-🚀 Aproveite a navegação sem anúncios!
-            `;
-            alert(tutorial);
-        }
-
-        // Inicializar
-        carregarConfiguracoes();
-        
         // Detectar se é PWA
         if (window.matchMedia('(display-mode: standalone)').matches) {
             console.log('Executando como PWA');

@@ -9,7 +9,14 @@
     "https://youtu.be/*",
     "https://*.twitter.com/*",
     "https://x.com/*",
-    "https://*.tiktok.com/*"
+    "https://*.tiktok.com/*",
+    "https://*.instagram.com/*",
+    "https://*.facebook.com/*",
+    "https://*.blogspot.com/*",
+    "https://*.wordpress.com/*",
+    "https://*.medium.com/*",
+    "https://*.weebly.com/*",
+    "https://*.wixsite.com/*"
   ],
   "background": {
     "service_worker": "background.js"

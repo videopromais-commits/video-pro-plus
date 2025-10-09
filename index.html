@@ -3,84 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redes Sociais - Layout Corrigido</title>
+    <title>Plataformas de Mídia Social</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
-        
+
+        :root {
+            --youtube: #FF0000;
+            --twitter: #1DA1F2;
+            --tiktok: #000000;
+            --instagram: #E1306C;
+            --facebook: #1877F2;
+            --background: #0f172a;
+            --card-bg: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+        }
+
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #fff;
+            background: var(--background);
+            color: var(--text-primary);
             min-height: 100vh;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            line-height: 1.6;
         }
-        
+
         .container {
-            max-width: 800px;
-            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
         }
-        
+
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
         }
-        
+
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 3rem;
             background: linear-gradient(90deg, #ff6b6b, #ffa36c, #ffde7d, #a3de83, #6a98f0, #9d65c9);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            margin-bottom: 1rem;
+            font-weight: 800;
         }
-        
+
         .subtitle {
-            font-size: 1.1rem;
-            color: #a0aec0;
-            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
         }
-        
-        .divider {
-            width: 100%;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.2);
-            margin: 20px 0;
-        }
-        
-        .apps-grid {
+
+        .main-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
-        
-        .app-card {
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 25px;
+
+        .features {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .features h2 {
+            color: #ffde7d;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            align-items: center;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list i {
+            margin-right: 1rem;
+            color: #6a98f0;
+            font-size: 1.2rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-card i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* SEÇÃO DE SITES SUPORTADOS - COM LOGOS CORRIGIDAS */
+        .supported-platforms {
+            margin-top: 3rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: #ffde7d;
+        }
+
+        .platforms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .platform-card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
-        .app-card:hover {
+
+        .platform-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
-        
+
+        /* LOGOS CORRIGIDAS - Centralizadas e proporcionais */
         .logo-container {
             width: 80px;
             height: 80px;
@@ -88,75 +175,65 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
-        
+
         .logo {
-            font-size: 2.5rem;
-            font-weight: bold;
+            font-size: 2.2rem;
             color: white;
         }
-        
-        .app-title {
+
+        .platform-card h3 {
             font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            text-align: center;
+            margin-bottom: 1rem;
         }
-        
-        .app-description {
-            color: #cbd5e0;
-            text-align: center;
+
+        .platform-card p {
+            color: var(--text-secondary);
             line-height: 1.5;
         }
-        
-        /* Cores específicas para cada aplicativo */
+
+        /* Cores específicas para cada plataforma */
         .youtube .logo-container {
-            background: linear-gradient(135deg, #FF0000, #CC0000);
+            background: linear-gradient(135deg, var(--youtube), #CC0000);
         }
-        
+
         .twitter .logo-container {
-            background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
+            background: linear-gradient(135deg, var(--twitter), #0d8bd9);
         }
-        
+
         .tiktok .logo-container {
-            background: linear-gradient(135deg, #000000, #333333);
+            background: linear-gradient(135deg, var(--tiktok), #333333);
         }
-        
+
         .instagram .logo-container {
-            background: linear-gradient(135deg, #E1306C, #C13584);
+            background: linear-gradient(135deg, var(--instagram), #C13584);
         }
-        
+
         .facebook .logo-container {
-            background: linear-gradient(135deg, #1877F2, #0e5cb8);
+            background: linear-gradient(135deg, var(--facebook), #0e5cb8);
         }
-        
-        .supported-sites {
-            margin-top: 40px;
-            text-align: center;
-        }
-        
-        .supported-sites h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #ffde7d;
-        }
-        
+
         footer {
-            margin-top: 40px;
             text-align: center;
-            color: #718096;
-            font-size: 0.9rem;
+            margin-top: 4rem;
+            padding: 2rem 0;
+            color: var(--text-secondary);
+            border-top: 1px solid #334155;
         }
-        
-        @media (max-width: 600px) {
-            .apps-grid {
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
                 grid-template-columns: 1fr;
             }
             
             h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
         }
     </style>
@@ -164,64 +241,96 @@
 <body>
     <div class="container">
         <header>
-            <h1>Redes Sociais</h1>
-            <p class="subtitle">Principais plataformas e suas funcionalidades</p>
+            <h1>Plataformas de Mídia Social</h1>
+            <p class="subtitle">Explore as principais redes sociais e suas funcionalidades mais populares</p>
         </header>
-        
-        <div class="divider"></div>
-        
-        <div class="supported-sites">
-            <h2>Sites Suportados</h2>
-            <div class="apps-grid">
-                <!-- YouTube -->
-                <div class="app-card youtube">
-                    <div class="logo-container">
-                        <div class="logo">YT</div>
-                    </div>
-                    <h2 class="app-title">YouTube</h2>
-                    <p class="app-description">Área de login e vídeos</p>
+
+        <div class="main-content">
+            <div class="features">
+                <h2>Funcionalidades Principais</h2>
+                <ul class="feature-list">
+                    <li><i class="fas fa-video"></i> Reprodução de vídeos em alta qualidade</li>
+                    <li><i class="fas fa-user-circle"></i> Sistemas de login e perfis personalizados</li>
+                    <li><i class="fas fa-stream"></i> Feeds personalizados com algoritmos inteligentes</li>
+                    <li><i class="fas fa-share-alt"></i> Compartilhamento de conteúdo em tempo real</li>
+                    <li><i class="fas fa-comment"></i> Sistemas de comentários e interações</li>
+                    <li><i class="fas fa-mobile-alt"></i> Experiência otimizada para dispositivos móveis</li>
+                </ul>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <div class="number">4.8B+</div>
+                    <div class="label">Usuários Globais</div>
                 </div>
-                
-                <!-- Twitter -->
-                <div class="app-card twitter">
-                    <div class="logo-container">
-                        <div class="logo">X</div>
-                    </div>
-                    <h2 class="app-title">X/Twitter</h2>
-                    <p class="app-description">Vídeos e timeline</p>
+                <div class="stat-card">
+                    <i class="fas fa-globe"></i>
+                    <div class="number">190+</div>
+                    <div class="label">Países Atendidos</div>
                 </div>
-                
-                <!-- TikTok -->
-                <div class="app-card tiktok">
-                    <div class="logo-container">
-                        <div class="logo">TT</div>
-                    </div>
-                    <h2 class="app-title">TikTok</h2>
-                    <p class="app-description">Feed e vídeos</p>
+                <div class="stat-card">
+                    <i class="fas fa-clock"></i>
+                    <div class="number">2.5H</div>
+                    <div class="label">Tempo Médio Diário</div>
                 </div>
-                
-                <!-- Instagram -->
-                <div class="app-card instagram">
-                    <div class="logo-container">
-                        <div class="logo">IG</div>
-                    </div>
-                    <h2 class="app-title">Instagram</h2>
-                    <p class="app-description">Stories e Reels</p>
-                </div>
-                
-                <!-- Facebook -->
-                <div class="app-card facebook">
-                    <div class="logo-container">
-                        <div class="logo">FB</div>
-                    </div>
-                    <h2 class="app-title">Facebook</h2>
-                    <p class="app-description">Vídeos e Feed</p>
+                <div class="stat-card">
+                    <i class="fas fa-language"></i>
+                    <div class="number">100+</div>
+                    <div class="label">Idiomas Suportados</div>
                 </div>
             </div>
         </div>
-        
+
+        <!-- SEÇÃO DE SITES SUPORTADOS COM LOGOS CORRIGIDAS -->
+        <section class="supported-platforms">
+            <h2 class="section-title">Sites Suportados</h2>
+            <div class="platforms-grid">
+                <div class="platform-card youtube">
+                    <div class="logo-container">
+                        <div class="logo"><i class="fab fa-youtube"></i></div>
+                    </div>
+                    <h3>YouTube</h3>
+                    <p>Área de login e vídeos</p>
+                </div>
+
+                <div class="platform-card twitter">
+                    <div class="logo-container">
+                        <div class="logo"><i class="fab fa-twitter"></i></div>
+                    </div>
+                    <h3>X/Twitter</h3>
+                    <p>Vídeos e timeline</p>
+                </div>
+
+                <div class="platform-card tiktok">
+                    <div class="logo-container">
+                        <div class="logo"><i class="fab fa-tiktok"></i></div>
+                    </div>
+                    <h3>TikTok</h3>
+                    <p>Feed e vídeos</p>
+                </div>
+
+                <div class="platform-card instagram">
+                    <div class="logo-container">
+                        <div class="logo"><i class="fab fa-instagram"></i></div>
+                    </div>
+                    <h3>Instagram</h3>
+                    <p>Stories e Reels</p>
+                </div>
+
+                <div class="platform-card facebook">
+                    <div class="logo-container">
+                        <div class="logo"><i class="fab fa-facebook"></i></div>
+                    </div>
+                    <h3>Facebook</h3>
+                    <p>Vídeos e Feed</p>
+                </div>
+            </div>
+        </section>
+
         <footer>
-            <p>Layout corrigido - Logos centralizadas e proporcionais</p>
+            <p>© 2025 Plataformas de Mídia Social. Todos os direitos reservados.</p>
+            <p>Layout otimizado com logos centralizadas e proporcionais</p>
         </footer>
     </div>
 </body>

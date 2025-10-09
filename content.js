@@ -1,117 +1,135 @@
-// Video Pro Plus - Bloqueador Universal
-console.log('✅ Video Pro Plus ATIVADO!');
+// Video Pro Plus - Bloqueador Universal de Anúncios
+console.log('Video Pro Plus - Bloqueador ativado');
 
-// Função para forçar navegador em sites
-function forceBrowserUrl(url) {
-  try {
-    const urlObj = new URL(url);
-    let modified = false;
-
-    // 🔴 YOUTUBE
-    if (url.includes('youtube.com') || url.includes('youtu.be')) {
-      urlObj.searchParams.set('noapp', '1');
-      urlObj.searchParams.set('web', '1');
-      urlObj.searchParams.set('force_browser', 'true');
-      urlObj.searchParams.set('nomobile', '1');
-      urlObj.searchParams.delete('androidapp');
-      if (urlObj.hostname.includes('m.') || urlObj.hostname === 'youtu.be') {
-        urlObj.hostname = 'www.youtube.com';
-      }
-      modified = true;
+// Bloqueador principal de anúncios do YouTube
+function bloquearAnunciosYouTube() {
+    // Remove anúncios em vídeos
+    const anunciosVideo = document.querySelectorAll('.video-ads, .ytp-ad-module, .ad-container, .ad-div, [class*="ad-"], [class*="Ad"]');
+    anunciosVideo.forEach(ad => {
+        ad.style.display = 'none';
+        ad.remove();
+    });
+    
+    // Remove anúncios overlay
+    const anunciosOverlay = document.querySelectorAll('.ytp-ad-overlay-container, .ytp-ad-image-overlay');
+    anunciosOverlay.forEach(ad => {
+        ad.style.display = 'none';
+        ad.remove();
+    });
+    
+    // Remove anúncios na sidebar
+    const anunciosSidebar = document.querySelectorAll('#related #player-ads, #watch7-sidebar-ads, [aria-label*="anúncio"], [aria-label*="ad"]');
+    anunciosSidebar.forEach(ad => {
+        ad.style.display = 'none';
+        ad.remove();
+    });
+    
+    // Remove anúncios entre vídeos (playlists)
+    const anunciosPlaylist = document.querySelectorAll('.ytp-ad-text, .ytp-ad-message, .ytp-ad-skip-button, .ytp-ad-preview-text');
+    anunciosPlaylist.forEach(ad => {
+        ad.style.display = 'none';
+        ad.remove();
+    });
+    
+    // Remove banners de anúncios
+    const banners = document.querySelectorAll('#masthead-ad, #player-ads, .ad-display, .display-ad-container');
+    banners.forEach(banner => {
+        banner.style.display = 'none';
+        banner.remove();
+    });
+    
+    // Remove anúncios nos resultados de busca
+    const anunciosBusca = document.querySelectorAll('.search-pva, .promoted-videos, [data-context*="ad"]');
+    anunciosBusca.forEach(ad => {
+        ad.style.display = 'none';
+        ad.remove();
+    });
+    
+    // Remove anúncios nas playlists do usuário
+    const anunciosPlaylistUsuario = document.querySelectorAll('#contents ytd-playlist-video-renderer [class*="ad"], #contents [aria-label*="ad"]');
+    anunciosPlaylistUsuario.forEach(ad => {
+        ad.style.display = 'none';
+        ad.remove();
+    });
+    
+    // Remove anúncios nas recomendações
+    const anunciosRecomendacoes = document.querySelectorAll('#contents ytd-rich-item-renderer [class*="ad"], #contents [target*="ad"]');
+    anunciosRecomendacoes.forEach(ad => {
+        ad.style.display = 'none';
+        ad.remove();
+    });
+    
+    // Pula anúncios automaticamente se possível
+    const skipButton = document.querySelector('.ytp-ad-skip-button, .ytp-ad-skip-button-modern');
+    if (skipButton) {
+        skipButton.click();
     }
+    
+    // Remove anúncios de display
+    const displayAds = document.querySelectorAll('ytd-ad-slot-renderer, ytd-promoted-sparkles-web-renderer');
+    displayAds.forEach(ad => {
+        ad.style.display = 'none';
+        ad.remove();
+    });
+}
 
-    // 🔵 TWITTER/X
-    if (url.includes('twitter.com') || url.includes('x.com')) {
-      urlObj.searchParams.set('web', '1');
-      urlObj.searchParams.set('no_app', '1');
-      modified = true;
-    }
-
-    // 🎵 TIKTOK
-    if (url.includes('tiktok.com')) {
-      urlObj.searchParams.set('lang', 'en');
-      urlObj.searchParams.set('no_app', '1');
-      modified = true;
-    }
-
-    // 📷 INSTAGRAM - NOVO
-    if (url.includes('instagram.com')) {
-      urlObj.searchParams.set('__a', '1');
-      urlObj.searchParams.set('no_app', '1');
-      modified = true;
-    }
-
-    // 👥 FACEBOOK - NOVO
-    if (url.includes('facebook.com')) {
-      urlObj.searchParams.set('_fb_noscript', '1');
-      urlObj.searchParams.set('no_app', '1');
-      modified = true;
-    }
-
-    // 📝 BLOGS - NOVO (força navegador)
-    const blogDomains = [
-      'blogspot.com', 'wordpress.com', 'medium.com', 
-      'weebly.com', 'wixsite.com', 'blog.br'
+// Bloqueador para outras plataformas
+function bloquearAnunciosGerais() {
+    // Remove elementos comuns de anúncios
+    const selectors = [
+        '[class*="advertisement"]',
+        '[class*="ad-container"]',
+        '[class*="banner-ad"]',
+        '[id*="advertisement"]',
+        '[id*="ad-container"]',
+        '[id*="banner-ad"]',
+        'iframe[src*="ads"]',
+        'iframe[src*="doubleclick"]',
+        'iframe[src*="googleads"]',
+        'ins.adsbygoogle',
+        '.ad-banner',
+        '.ad-wrapper',
+        '.ad-frame',
+        '.adsense',
+        '.adunit',
+        '.ad-placeholder'
     ];
     
-    if (blogDomains.some(domain => url.includes(domain))) {
-      urlObj.searchParams.set('utm_source', 'browser');
-      urlObj.searchParams.set('no_app', '1');
-      modified = true;
-    }
-
-    return modified ? urlObj.toString() : url;
-  } catch (error) {
-    return url;
-  }
-}
-
-// Intercepta TODOS os cliques em links
-document.addEventListener('click', function(event) {
-  const link = event.target.closest('a');
-  if (link && link.href) {
-    const url = link.href;
-    const newUrl = forceBrowserUrl(url);
-    
-    if (newUrl !== url) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      window.location.href = newUrl;
-    }
-  }
-}, true);
-
-// Bloqueia anúncios em blogs automaticamente
-function blockBlogAds() {
-  // Seletores comuns de anúncios em blogs
-  const adSelectors = [
-    '[class*="advertisement"]',
-    '[class*="adsense"]',
-    '[class*="ad-container"]',
-    '[id*="advertisement"]',
-    '[id*="adsense"]',
-    '.adsbygoogle',
-    '.ad-unit',
-    '.banner-ad',
-    '.popup-ad',
-    '.ad-popup'
-  ];
-  
-  adSelectors.forEach(selector => {
-    const ads = document.querySelectorAll(selector);
-    ads.forEach(ad => {
-      ad.style.display = 'none';
-      console.log('🚫 Anúncio bloqueado:', selector);
+    selectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+            element.style.display = 'none';
+            element.remove();
+        });
     });
-  });
 }
 
-// Executa bloqueio de anúncios em blogs
-const currentUrl = window.location.href;
-const blogDomains = ['blogspot.com', 'wordpress.com', 'medium.com', 'weebly.com', 'wixsite.com'];
-if (blogDomains.some(domain => currentUrl.includes(domain))) {
-  setTimeout(blockBlogAds, 1000);
-  setInterval(blockBlogAds, 3000);
+// Executa o bloqueio
+function executarBloqueio() {
+    bloquearAnunciosYouTube();
+    bloquearAnunciosGerais();
 }
 
-console.log('🎯 YouTube, Twitter, TikTok, Instagram, Facebook e Blogs protegidos!');
+// Executa imediatamente
+executarBloqueio();
+
+// Executa quando o DOM muda (para conteúdo carregado dinamicamente)
+const observer = new MutationObserver(executarBloqueio);
+observer.observe(document.body, {
+    childList: true,
+    subtree: true
+});
+
+// Executa periodicamente para garantir bloqueio
+setInterval(executarBloqueio, 2000);
+
+// Remove qualquer pop-up de anúncio
+setTimeout(() => {
+    const popups = document.querySelectorAll('[class*="popup"], [class*="modal"][class*="ad"]');
+    popups.forEach(popup => {
+        if (popup.innerHTML.toLowerCase().includes('ad') || popup.innerHTML.toLowerCase().includes('anúncio')) {
+            popup.style.display = 'none';
+            popup.remove();
+        }
+    });
+}, 3000);

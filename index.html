@@ -33,7 +33,7 @@
         
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             padding-bottom: 20px;
             border-bottom: 2px solid #00ff88;
         }
@@ -52,6 +52,42 @@
             color: #cccccc;
             font-weight: 300;
         }
+        
+        /* BOTÕES ABAIXO DO TÍTULO */
+        .social-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 30px 0;
+        }
+        
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        .btn-youtube { background: linear-gradient(45deg, #FF0000, #CC0000); }
+        .btn-twitter { background: linear-gradient(45deg, #1DA1F2, #0d8bd9); }
+        .btn-tiktok { background: linear-gradient(45deg, #000000, #333333); }
+        .btn-instagram { background: linear-gradient(45deg, #E4405F, #C13584); }
+        .btn-facebook { background: linear-gradient(45deg, #1877F2, #0d5fbf); }
+        .btn-blogs { background: linear-gradient(45deg, #9C27B0, #7B1FA2); }
         
         .status-section {
             background: rgba(0, 255, 136, 0.1);
@@ -83,83 +119,6 @@
             color: #ffc107;
             margin-bottom: 10px;
         }
-        
-        .install-steps {
-            background: rgba(33, 150, 243, 0.1);
-            border: 1px solid #2196f3;
-            border-radius: 10px;
-            padding: 25px;
-            margin: 25px 0;
-        }
-        
-        .install-steps h3 {
-            color: #2196f3;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        
-        .steps {
-            counter-reset: step-counter;
-            list-style: none;
-        }
-        
-        .steps li {
-            counter-increment: step-counter;
-            margin-bottom: 15px;
-            padding-left: 40px;
-            position: relative;
-        }
-        
-        .steps li:before {
-            content: counter(step-counter);
-            background: #2196f3;
-            color: white;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            left: 0;
-            top: 0;
-            font-size: 0.8em;
-            font-weight: bold;
-        }
-        
-        .social-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin: 20px 0;
-        }
-        
-        .social-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            font-weight: bold;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .social-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-        }
-        
-        .btn-youtube { background: linear-gradient(45deg, #FF0000, #CC0000); }
-        .btn-twitter { background: linear-gradient(45deg, #1DA1F2, #0d8bd9); }
-        .btn-tiktok { background: linear-gradient(45deg, #000000, #333333); }
-        .btn-instagram { background: linear-gradient(45deg, #E4405F, #C13584); }
-        .btn-facebook { background: linear-gradient(45deg, #1877F2, #0d5fbf); }
-        .btn-blogs { background: linear-gradient(45deg, #9C27B0, #7B1FA2); }
         
         .sites-section {
             background: rgba(156, 39, 176, 0.1);
@@ -201,14 +160,6 @@
             margin-bottom: 10px;
         }
         
-        code {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            color: #00ff88;
-        }
-        
         .footer {
             text-align: center;
             margin-top: 30px;
@@ -226,20 +177,7 @@
             <h2>Bloqueador Universal de Anúncios em Videos</h2>
         </div>
 
-        <div class="status-section">
-            <span class="status">Pronto para usar ✔️</span>
-            <p style="margin-top: 10px; color: #cccccc;">
-                Extensão otimizada para forçar abertura no navegador e bloquear anúncios
-            </p>
-        </div>
-
-        <div class="solution-box">
-            <h3>🔧 SOLUÇÃO YOUTUBE:</h3>
-            <p><strong>Problema:</strong> YouTube insiste em abrir no app</p>
-            <p><strong>Solução:</strong> Use a função "YouTube Forçar Navegador" na extensão</p>
-        </div>
-
-        <!-- BOTÕES DAS REDES SOCIAIS -->
+        <!-- BOTÕES AGORA ABAIXO DO TÍTULO -->
         <div class="social-buttons">
             <a href="https://youtube.com" class="social-btn btn-youtube" target="_blank">
                 <span>🎬</span> YouTube
@@ -261,16 +199,17 @@
             </a>
         </div>
 
-        <div class="install-steps">
-            <h3>📥 COMO INSTALAR:</h3>
-            <ol class="steps">
-                <li>Baixe os arquivos deste repositório</li>
-                <li>Extraia em uma pasta chamada <code>video-pro-plus</code></li>
-                <li>Abra <code>chrome://extensions/</code> no Chrome</li>
-                <li>Ative <strong>"Modo do desenvolvedor"</strong> no canto superior direito</li>
-                <li>Clique em <strong>"Carregar sem compactação"</strong></li>
-                <li>Selecione a pasta da extensão extraída</li>
-            </ol>
+        <div class="status-section">
+            <span class="status">Pronto para usar ✔️</span>
+            <p style="margin-top: 10px; color: #cccccc;">
+                Extensão otimizada para forçar abertura no navegador e bloquear anúncios
+            </p>
+        </div>
+
+        <div class="solution-box">
+            <h3>🔧 SOLUÇÃO YOUTUBE:</h3>
+            <p><strong>Problema:</strong> YouTube insiste em abrir no app</p>
+            <p><strong>Solução:</strong> Use a função "YouTube Forçar Navegador" na extensão</p>
         </div>
 
         <div class="sites-section">

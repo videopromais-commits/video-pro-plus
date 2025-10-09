@@ -3,42 +3,151 @@
 <head>
     <meta charset="utf-8">
     <style>
-        body { width: 300px; padding: 20px; background: #1a1a1a; color: white; font-family: Arial; }
-        .header { text-align: center; margin-bottom: 20px; }
-        .status { color: #00ff00; font-weight: bold; margin: 10px 0; }
-        .feature { margin: 15px 0; padding: 10px; background: #2a2a2a; border-radius: 5px; }
-        input[type="checkbox"] { margin-right: 10px; }
-        label { cursor: pointer; }
-        .disabled { opacity: 0.6; }
+        body { 
+            width: 350px; 
+            padding: 20px; 
+            background: #1a1a1a; 
+            color: white; 
+            font-family: Arial, sans-serif;
+        }
+        .header { 
+            text-align: center; 
+            margin-bottom: 20px; 
+            border-bottom: 2px solid #00ff88;
+            padding-bottom: 15px;
+        }
+        .status { 
+            color: #00ff00; 
+            font-weight: bold; 
+            margin: 10px 0;
+            background: rgba(0, 255, 136, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        .feature { 
+            margin: 12px 0; 
+            padding: 12px; 
+            background: #2a2a2a; 
+            border-radius: 8px;
+            border-left: 4px solid #00ff88;
+        }
+        .feature-new {
+            border-left: 4px solid #ff9800;
+            background: #2a2a2a;
+        }
+        input[type="checkbox"] { 
+            margin-right: 10px; 
+            transform: scale(1.2);
+        }
+        label { 
+            cursor: pointer; 
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .disabled { 
+            opacity: 0.7; 
+        }
+        .site-icon {
+            font-size: 1.2em;
+        }
+        .description {
+            font-size: 0.8em;
+            color: #cccccc;
+            margin-top: 5px;
+            margin-left: 30px;
+        }
+        .solution-box {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+        .version {
+            text-align: center;
+            margin-top: 15px;
+            color: #888;
+            font-size: 0.8em;
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h2>Video Pro Plus</h2>
+        <h2>🎯 Video Pro Plus</h2>
         <div class="status">Pronto para usar ✔️</div>
+    </div>
+
+    <div class="solution-box">
+        <strong>🔧 SOLUÇÃO YOUTUBE:</strong><br>
+        <span style="font-size: 0.85em;">Força abertura no navegador</span>
     </div>
 
     <div class="feature">
         <input type="checkbox" id="youtube" value="youtube" checked disabled>
-        <label for="youtube" class="disabled">YouTube Forçar Navegador</label>
-        <div style="font-size: 12px; color: #888; margin-top: 5px;">
-            Solução: YouTube insiste em abrir no app
-        </div>
+        <label for="youtube" class="disabled">
+            <span class="site-icon">🎬</span>
+            YouTube Forçar Navegador
+        </label>
+        <div class="description">Solução: YouTube insiste em abrir no app</div>
     </div>
 
     <div class="feature">
         <input type="checkbox" id="twitter" value="twitter" checked>
-        <label for="twitter">X/Twitter</label>
+        <label for="twitter">
+            <span class="site-icon">🐦</span>
+            X/Twitter
+        </label>
     </div>
 
     <div class="feature">
         <input type="checkbox" id="tiktok" value="tiktok" checked>
-        <label for="tiktok">TikTok</label>
+        <label for="tiktok">
+            <span class="site-icon">🎵</span>
+            TikTok
+        </label>
+    </div>
+
+    <div class="feature feature-new">
+        <input type="checkbox" id="instagram" value="instagram" checked>
+        <label for="instagram">
+            <span class="site-icon">📷</span>
+            Instagram
+        </label>
+        <div class="description">NOVO - Stories e Reels</div>
+    </div>
+
+    <div class="feature feature-new">
+        <input type="checkbox" id="facebook" value="facebook" checked>
+        <label for="facebook">
+            <span class="site-icon">👥</span>
+            Facebook
+        </label>
+        <div class="description">NOVO - Vídeos e Feed</div>
+    </div>
+
+    <div class="feature feature-new">
+        <input type="checkbox" id="blogs" value="blogs" checked>
+        <label for="blogs">
+            <span class="site-icon">📝</span>
+            Blogs/Sites
+        </label>
+        <div class="description">NOVO - Bloqueio de anúncios automático</div>
     </div>
 
     <div class="feature">
         <input type="checkbox" id="tutorial" value="tutorial">
-        <label for="tutorial">Tutorial Completo</label>
+        <label for="tutorial">
+            <span class="site-icon">📚</span>
+            Tutorial Completo
+        </label>
+    </div>
+
+    <div class="version">
+        v2.0 | YouTube, Twitter, TikTok, Instagram, Facebook, Blogs
     </div>
 
     <script src="popup.js"></script>

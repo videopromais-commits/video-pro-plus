@@ -2,43 +2,34 @@
   "manifest_version": 3,
   "name": "Video Pro Plus",
   "version": "1.0",
-  "description": "Bloqueador Universal de Anúncios em Vídeos",
-  "permissions": [
-    "activeTab",
-    "webRequest",
-    "webRequestBlocking",
-    "storage",
-    "scripting"
-  ],
+  "description": "Bloqueador Universal de Anúncios em Videos",
+  "permissions": ["webNavigation"],
   "host_permissions": [
     "https://*.youtube.com/*",
+    "https://youtu.be/*",
     "https://*.twitter.com/*",
+    "https://x.com/*",
     "https://*.tiktok.com/*",
     "https://*.instagram.com/*",
     "https://*.facebook.com/*",
-    "https://*/*",
-    "http://*/*"
+    "https://*.blogspot.com/*",
+    "https://*.wordpress.com/*",
+    "https://*.medium.com/*",
+    "https://*.weebly.com/*",
+    "https://*.wixsite.com/*"
   ],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://*.youtube.com/*",
-        "https://*.twitter.com/*",
-        "https://*.tiktok.com/*",
-        "https://*.instagram.com/*",
-        "https://*.facebook.com/*"
-      ],
+      "matches": ["*://*/*"],
       "js": ["content.js"],
-      "run_at": "document_start",
-      "all_frames": true
+      "run_at": "document_start"
     }
   ],
   "action": {
-    "default_popup": "popup.html",
-    "default_title": "Video Pro Plus"
+    "default_popup": "popup.html"
   },
   "icons": {
     "16": "icon16.png",
@@ -46,3 +37,4 @@
     "128": "icon128.png"
   }
 }
+

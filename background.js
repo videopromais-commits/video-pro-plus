@@ -11,7 +11,7 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
   }
 });
 
-// Função para forçar navegador
+// Função para forçar navegador em MULTIPLOS sites
 function forceBrowserUrl(url) {
   try {
     const urlObj = new URL(url);
@@ -44,8 +44,45 @@ function forceBrowserUrl(url) {
       modified = true;
     }
 
+    // 📷 INSTAGRAM - NOVO
+    if (url.includes('instagram.com')) {
+      urlObj.searchParams.set('__a', '1');
+      urlObj.searchParams.set('no_app', '1');
+      modified = true;
+    }
+
+    // 👥 FACEBOOK - NOVO
+    if (url.includes('facebook.com')) {
+      urlObj.searchParams.set('_fb_noscript', '1');
+      urlObj.searchParams.set('no_app', '1');
+      modified = true;
+    }
+
+    // 📝 BLOGS - NOVO
+    const blogDomains = [
+      'blogspot.com', 'wordpress.com', 'medium.com', 
+      'weebly.com', 'wixsite.com', 'blog.br'
+    ];
+    
+    if (blogDomains.some(domain => url.includes(domain))) {
+      urlObj.searchParams.set('utm_source', 'browser');
+      urlObj.searchParams.set('no_app', '1');
+      modified = true;
+    }
+
     return modified ? urlObj.toString() : url;
   } catch (error) {
     return url;
   }
 }
+
+// Mensagem para popup
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "getStatus") {
+    sendResponse({
+      status: "active",
+      sites: ["YouTube", "Twitter", "TikTok", "Instagram", "Facebook", "Blogs"],
+      version: "2.0"
+    });
+  }
+});
